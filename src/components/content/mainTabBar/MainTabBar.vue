@@ -28,6 +28,7 @@
   import TabBar from 'components/common/tabbar/TabBar'
   import TabBarItem from 'components/common/tabbar/TabBarItem'
 export default {
+  name : 'MainTabBar',
 //import引入的组件需要注入到对象中才能使用
 components: {
   TabBar,
