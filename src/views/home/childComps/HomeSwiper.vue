@@ -1,32 +1,35 @@
 <!--  -->
 <template>
-  <div id="home">
-    <nav-bar class="home-nav">
-      <div slot="center">购物车</div>
-    </nav-bar>
-    <home-swiper :banners="banners"></home-swiper>
-    <recommend-view :recommends = "recommends"></recommend-view>
-  </div>
+    <swiper>
+      <swiper-item v-for="(item,index) in banners" :key="index">
+        <a :href="item.link">
+          <img :src="item.image" alt="">
+        </a>
+      </swiper-item>
+    </swiper>
 </template>
 
 <script>
-  import NavBar from 'components/common/navbar/NavBar';
-  import HomeSwiper from './childComps/HomeSwiper'
-  import RecommendView from './childComps/RecommendView'
-  import {getHomeMultidata} from 'network/home.js';
+  import {Swiper,SwiperItem} from 'components/common/swiper'
   export default {
+  name : 'HomeSwiper',
   //import引入的组件需要注入到对象中才能使用
-
   components: {
-    NavBar,
-    HomeSwiper,
-    RecommendView  
+    Swiper,
+    SwiperItem
+  },
+  props: {
+    banners:{
+      type : Array,
+      default(){
+        return []
+      }
+    }
   },
   data() {
   //这里存放数据
   return {
-    banners: [],
-    recommends: []
+
   };
   },
   //监听属性 类似于data概念
@@ -39,12 +42,7 @@
   },
   //生命周期 - 创建完成（可以访问当前this实例）
   created() {
-    // 1.请求多个数据，
-    getHomeMultidata().then(res=>{
-      console.log(res)
-      this.banners = res.data.banner.list
-      this.recommends = res.data.recommend.list
-    })
+
   },
   //生命周期 - 挂载完成（可以访问DOM元素）
   mounted() {
@@ -58,10 +56,7 @@
   destroyed() {}, //生命周期 - 销毁完成
   activated() {}, //如果页面有keep-alive缓存功能，这个函数会触发
   }
-</script>
+  </script>
 <style scoped>
-  .home-nav{
-    background-color: var(--color-tint);
-    color: #fff;
-  }
+
 </style>
