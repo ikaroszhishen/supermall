@@ -1,35 +1,32 @@
 <!--  -->
 <template>
-    <swiper>
-      <swiper-item v-for="(item,index) in banners" :key="index">
-        <a :href="item.link">
-          <img :src="item.image" alt="" @load="imageLoad">
-        </a>
+    <swiper  class="detail-swiper">
+      <swiper-item v-for="(item,index) in topImages" :key="index">
+        <img :src="item" alt="">
       </swiper-item>
     </swiper>
 </template>
-
 <script>
-  import {Swiper,SwiperItem} from 'components/common/swiper'
-  export default {
-  name : 'HomeSwiper',
+ import {Swiper,SwiperItem} from 'components/common/swiper' 
+export default {
   //import引入的组件需要注入到对象中才能使用
-  components: {
-    Swiper,
-    SwiperItem
-  },
-  props: {
-    banners:{
+  name : 'DetailSwiper',
+  props : {
+    topImages :{
       type : Array,
       default(){
         return []
       }
     }
   },
+  components: {
+    Swiper,
+    SwiperItem
+  },
   data() {
   //这里存放数据
   return {
-    isLoad : false
+
   };
   },
   //监听属性 类似于data概念
@@ -38,16 +35,10 @@
   watch: {},
   //方法集合
   methods: {
-    imageLoad(){
-      if(!this.isLoad){
-      this.$emit('swiperImageLoad')
-      this.isLoad = true
-      }
-    }
+
   },
   //生命周期 - 创建完成（可以访问当前this实例）
   created() {
-
   },
   //生命周期 - 挂载完成（可以访问DOM元素）
   mounted() {
@@ -61,7 +52,10 @@
   destroyed() {}, //生命周期 - 销毁完成
   activated() {}, //如果页面有keep-alive缓存功能，这个函数会触发
   }
-  </script>
+</script>
 <style scoped>
-
+ .detail-swiper{
+   height: 300px;
+   overflow: hidden;
+ }
 </style>

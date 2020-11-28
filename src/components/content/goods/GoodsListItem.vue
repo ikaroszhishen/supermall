@@ -1,7 +1,7 @@
 <!--  -->
 <template>
-  <div class='goods-item'>
-    <img :src="goodsItem.show.img" alt="">
+  <div class='goods-item' @click="itemClick">
+    <img :src="showImage" alt="" @load="imageLoad">
     <div class="goods-info">
       <p>{{goodsItem.title}}</p>
       <span class="price">{{goodsItem.price}}</span>
@@ -31,12 +31,21 @@ export default {
   };
   },
   //监听属性 类似于data概念
-  computed: {},
+  computed: {
+    showImage(){
+      return this.goodsItem.image || this.goodsItem.show.img
+    }
+  },
   //监控data中的数据变化
   watch: {},
   //方法集合
   methods: {
-
+    imageLoad(){
+      this.$bus.$emit('itemImageLoad')
+    },
+    itemClick(){
+      this.$router.push('/detail/' + this.goodsItem.iid)
+    }
   },
   //生命周期 - 创建完成（可以访问当前this实例）
   created() {

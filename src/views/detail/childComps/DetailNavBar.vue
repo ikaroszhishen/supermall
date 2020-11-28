@@ -1,35 +1,33 @@
 <!--  -->
 <template>
-    <swiper>
-      <swiper-item v-for="(item,index) in banners" :key="index">
-        <a :href="item.link">
-          <img :src="item.image" alt="" @load="imageLoad">
-        </a>
-      </swiper-item>
-    </swiper>
+  <div class=''>
+    <nav-bar>
+      <div slot="left" class="back" @click="backClick">
+        <img src="~assets/img/common/back.svg" alt="">
+      </div>
+      <div slot="center" class="title">
+      <div v-for="(item,index) in titles" 
+      :key="index" 
+      class="title-item" :class="{active: index === currentindex}" 
+      @click="titleClick(index)">{{item}}</div>
+    </div>
+    </nav-bar>
+  </div>
 </template>
 
 <script>
-  import {Swiper,SwiperItem} from 'components/common/swiper'
-  export default {
-  name : 'HomeSwiper',
+ import NavBar from 'components/common/navbar/NavBar'
+export default {
   //import引入的组件需要注入到对象中才能使用
+  name : 'DetailNavBar',
   components: {
-    Swiper,
-    SwiperItem
-  },
-  props: {
-    banners:{
-      type : Array,
-      default(){
-        return []
-      }
-    }
+    NavBar
   },
   data() {
   //这里存放数据
   return {
-    isLoad : false
+    titles: ['商品','参数','评论','推荐'],
+    currentindex : 0
   };
   },
   //监听属性 类似于data概念
@@ -38,11 +36,11 @@
   watch: {},
   //方法集合
   methods: {
-    imageLoad(){
-      if(!this.isLoad){
-      this.$emit('swiperImageLoad')
-      this.isLoad = true
-      }
+    titleClick(index){
+      this.currentindex = index
+    },
+    backClick(){
+      this.$router.back()
     }
   },
   //生命周期 - 创建完成（可以访问当前this实例）
@@ -61,7 +59,19 @@
   destroyed() {}, //生命周期 - 销毁完成
   activated() {}, //如果页面有keep-alive缓存功能，这个函数会触发
   }
-  </script>
+</script>
 <style scoped>
-
+ .title{
+   display: flex;
+   font-size: 13px;
+ }
+ .title-item{
+   flex: 1;
+ }
+ .active{
+   color: var(--color-high-text);
+ }
+ .back img{
+   margin-top: 12px;
+ }
 </style>
